@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Exo');
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Exo', sans-serif;
+  background-color: #000000;
+}
+
+#top {
+    width: 100%;
+    height: 2em;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f1f1f1+50,e1e1e1+51,f6f6f6+100;White+Gloss+%231 */
+background: #ffffff; /* Old browsers */
+background: -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+}
+
+#console {
+  background-color: #000000;
+  color: #32cd32;
+  font-size: 11px;
+  list-style: none;
+  position:  absolute;
+  right: 0;
+  top: 0;
+}
+
+#money {
+  padding: 5px 10px;
+  color: green;
+  font-weight: bold;
+}
+
+.player {
+  background-color: red;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  z-index: 1000;
+  transform: rotate(210deg) skew(-30deg) scaleY(0.864);
+}
+
+.tile {
+  transform-origin: 0 0;
+  position: absolute;
+    width: 50px;
+    height: 50px;
+    font-size: 8px;
+  }
+  .left {
+    background: blue;
+    -ms-transform: rotate(-30deg) skewX(-30deg) translate(130px, 172px) scaleY(0.864);
+    -webkit-transform: rotate(-30deg) skewX(-30deg) translate(130px, 172px) scaleY(0.864);
+    transform: rotate(-30deg) skewX(-30deg) translate(130px, 172px) scaleY(0.864);
+  }
+  .grass {
+    background-image: url("/assets/tile_grass.jpg");
+    background: green;
+    background-size: 50px 50px;
+    -ms-transform: rotate(210deg) skew(-30deg) translate(-200px, -60px) scaleY(0.864);
+    -webkit-transform: rotate(210deg) skew(-30deg) translate(-200px, -60px) scaleY(0.864);
+    transform: rotate(210deg) skew(-30deg) translate(-200px, -60px) scaleY(0.864);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .right {
+    background: green;
+    -ms-transform: rotate(90deg) skewX(-30deg) scaleY(0.864) translate(68px, -131px);
+    -webkit-transform: rotate(90deg) skewX(-30deg) scaleY(0.864) translate(68px, -131px);
+    transform: rotate(90deg) skewX(-30deg) scaleY(0.864) translate(68px, -131px);
+  }
+
+.grass:hover {
+  box-shadow: inset 0px 0px 0px 3px red;
+}
