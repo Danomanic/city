@@ -42,7 +42,7 @@ const tick = () => {
 
 const userConnect = async (socket) => {
   try {
-    connectedClients[socket.id] = { id: socket.id, money: 0, colour: Math.floor(Math.random()*16777215).toString(16) };
+    connectedClients[socket.id] = { id: socket.id, money: 100, colour: Math.floor(Math.random()*16777215).toString(16) };
     io.emit('user_connect', { id: socket.id, connected: clientsNum() });
     log("User Connected.", socket.id);
   }
