@@ -3,19 +3,21 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var connectedClients = new Array();
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
 
 io.on('connection', function(socket){
-  userConnect(socket.id);
+  userConnect(socket);
 
   socket.on('user_move', function(data){
     io.emit('user_move', {id: socket.id, top: data.top, left: data.left });
   });
 
   socket.on('disconnect', function(){
-    userDisconnect(socket.id);
+    userDisconnect(socket);
   });
 });
 
@@ -28,23 +30,25 @@ const tick = () => {
   }
 }
 
-const userConnect = async (id) => {
+const userConnect = async (socket) => {
   try {
-    io.emit('user_connect', { id: id });
-    log("User Connected.", id)
+    connectedClients[socket.id] = socket;
+    io.emit('user_connect', { id: socket.id, connected: clientsNum() });
+    log("User Connected.", socket.id);
   }
   catch {
-    log("Unable to broadcast user_connect.", id);
+    log("Unable to broadcast user_connect.", socket.id);
   }
 }
 
-const userDisconnect = async (id) => {
+const userDisconnect = async (socket) => {
   try {
-    io.emit('user_disconnect', { id: id });
-    log("User Disconnected.", id)
+    delete connectedClients[socket.id];
+    io.emit('user_disconnect', { id: socket.id, connected: clientsNum() });
+    log("User Disconnected", socket.id);
   }
   catch {
-    log("Unable to broadcast user_disconnect.", id);
+    log("Unable to broadcast user_disconnect.", socket.id);
   }
 }
 
@@ -72,6 +76,10 @@ const formatDate = (date) => {
   day = (day < 10 ? "0" : "") + day;
 
   return [year, month, day].join('-') + " " + [hour, min, sec].join(':');
+}
+
+const clientsNum = () => {
+  return Object.keys(connectedClients).length;
 }
 
 

@@ -1,22 +1,26 @@
 $(function () {
   var socket = io();
+  var notyf = new Notyf();
+
   var previous_connection = false;
   var money = 0;
 
   socket.on('user_connect', function(msg) {
-    $('#console').append($('<li>').text(msg.id + " connected."));
+    notyf.success(msg.id + " connected.");
+    $('#connected').html(msg.connected);
     var player = $('<div id="' + msg.id + '" class="player"></div>');
-    //$('body').append(player);
+    console.log(msg);
   });
 
   socket.on('user_disconnect', function(msg) {
-    $('#console').append($('<li>').text(msg.id + " disconnected."));
+    notyf.error(msg.id + " disconnected.");
+    $('#connected').html(msg.connected);
     $("#"+msg.id).remove();
   });
 
   socket.on('tick', function(msg) {
     money++;
-    $('#money').text("$" + money.toFixed(2));
+    $('#money').text(money.toFixed(2));
   });
 
   socket.on('user_move', function(msg) {
@@ -31,13 +35,13 @@ $(function () {
     if(previous_connection == true) {
       location.reload();
     } else {
-      $('#console').append($('<li>').text("Server connected."));
+      notyf.success("Server connected.");
     }
   });
 
   socket.on('disconnect', function () {
     previous_connection = true;
-    $('#console').append($('<li>').text("Server disconnected."));
+    notyf.error("Server disconnected.");
   });
 
   loadTiles();
