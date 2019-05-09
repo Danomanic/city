@@ -12,8 +12,8 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   userConnect(socket);
 
-  socket.on('user_move', function(data){
-    io.emit('user_move', {id: socket.id, top: data.top, left: data.left });
+  socket.on('user_click', function(data){
+    io.emit('user_click', {id: socket.id, tile: data.tile });
   });
 
   socket.on('disconnect', function(){

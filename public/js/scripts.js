@@ -7,9 +7,7 @@ $(function () {
 
   socket.on('user_connect', function(msg) {
     notyf.success(msg.id + " connected.");
-    $('#connected').html(msg.connected);
-    var player = $('<div id="' + msg.id + '" class="player"></div>');
-    console.log(msg);
+    $('#connected').html(msg.connected)
   });
 
   socket.on('user_disconnect', function(msg) {
@@ -23,12 +21,9 @@ $(function () {
     $('#money').text(money.toFixed(2));
   });
 
-  socket.on('user_move', function(msg) {
-    console.log("client move");
-    $("#"+ msg.id).animate({
-          top: msg.top,
-          left: msg.left + 20
-    }, 1000 );
+  socket.on('user_click', function(msg) {
+    console.log(msg.tile);
+    $("#" + msg.tile).addClass("clicked");
   });
 
   socket.on('connect', function () {
@@ -47,9 +42,8 @@ $(function () {
   loadTiles();
 
   $( ".tile" ).click(function() {
-    console.log("Click");
     var pos = $(this).position();
-    socket.emit('user_move', { id: socket.id, top: pos.top, left: pos.left });
+    socket.emit('user_click', { id: socket.id, tile: $(this).attr('id') });
   });
 
 });
@@ -57,12 +51,10 @@ $(function () {
 function loadTiles() {
   console.log("Loading tiles...");
 
-  for (var i = 2; i < 12; i++) {
-    var x = i * 50;
-    for (var j = 0; j < 10; j++) {
-      var y = j * 44;
-      var tile = $('<div class="tile grass" style="transform: rotate(210deg) skew(-30deg) translate(-' + x + 'px, ' + y + 'px) scaleY(0.864);">' + x + 'x' + y + '</div>');
-      //$("#area").append(tile);
+  for (var x = 1; x < 21; x++) {
+    for (var y = 1; y < 21; y++) {
+      var tile = $('<div id="tile_'+x+'_'+y+'" class="tile grass"></div>');
+      $("#area").append(tile);
     }
   }
 

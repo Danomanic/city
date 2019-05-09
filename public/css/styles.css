@@ -4,7 +4,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Exo', sans-serif;
-  background-color: #ffffff;
+  background-color: #eeeeee;
 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
@@ -17,17 +17,16 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
     padding: 5px;
     width: 70%;
     height: 2em;
-    background: #1B998B;
-    box-shadow: 0px 5px rgba(0,0,0,0.3);
+    background: #00adb5;
 }
 
 .field {
   padding: 5px 10px;
-  color: #555;
-  background: #FFFFFF;
+  color: #393e46;
+  background: #eeeeee;
   font-weight: bold;
   float: left;
-  border-left: 5px solid rgba(0,0,0,0.5);
+  border-left: 5px solid #393e46;
 }
 
 .money {
@@ -38,44 +37,38 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   margin-left: 10px;
 }
 
-.player {
-  background-color: red;
-  width: 50px;
-  height: 50px;
-  position: absolute;
-  z-index: 1000;
-  transform: rotate(210deg) skew(-30deg) scaleY(0.864);
+.area {
+  width: 1000px;
+  margin: auto;
+  display: flex;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
+    position: relative;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    box-shadow: -25px 25px #393e46;
 }
 
 .tile {
-  transform-origin: 0 0;
-  position: absolute;
     width: 50px;
     height: 50px;
     font-size: 8px;
-  }
-  .left {
-    background: blue;
-    -ms-transform: rotate(-30deg) skewX(-30deg) translate(130px, 172px) scaleY(0.864);
-    -webkit-transform: rotate(-30deg) skewX(-30deg) translate(130px, 172px) scaleY(0.864);
-    transform: rotate(-30deg) skewX(-30deg) translate(130px, 172px) scaleY(0.864);
+    float: left;
   }
   .grass {
-    background-image: url("/assets/tile_grass.jpg");
-    background: green;
+    background: #76a21e;
     background-size: 50px 50px;
-    -ms-transform: rotate(210deg) skew(-30deg) translate(-200px, -60px) scaleY(0.864);
+    /*-ms-transform: rotate(210deg) skew(-30deg) translate(-200px, -60px) scaleY(0.864);
     -webkit-transform: rotate(210deg) skew(-30deg) translate(-200px, -60px) scaleY(0.864);
     transform: rotate(210deg) skew(-30deg) translate(-200px, -60px) scaleY(0.864);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  .right {
-    background: green;
-    -ms-transform: rotate(90deg) skewX(-30deg) scaleY(0.864) translate(68px, -131px);
-    -webkit-transform: rotate(90deg) skewX(-30deg) scaleY(0.864) translate(68px, -131px);
-    transform: rotate(90deg) skewX(-30deg) scaleY(0.864) translate(68px, -131px);
+    border: 1px solid rgba(0, 0, 0, 0.1);*/
   }
 
 .grass:hover {
-  box-shadow: inset 0px 0px 0px 3px red;
+  box-shadow: inset 0px 0px 0px 3px #f79c1d;
+}
+
+.clicked {
+  background-color: #103c42;
 }
