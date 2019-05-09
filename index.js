@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var connectedClients = new Array();
+var connectedClients = {};
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
@@ -13,7 +13,13 @@ io.on('connection', function(socket){
   userConnect(socket);
 
   socket.on('user_click', function(data){
-    io.emit('user_click', {id: socket.id, tile: data.tile });
+    if(connectedClients[socket.id].money >= 10) {
+      connectedClients[socket.id].money = connectedClients[socket.id].money - 10;
+      socket.emit('user_money', connectedClients[socket.id].money);
+      io.emit('user_click', {id: socket.id, tile: data.tile, status: 1, colour: connectedClients[socket.id].colour });
+    } else {
+      io.emit('user_click', {id: socket.id, tile: data.tile, status: 0 });
+    }
   });
 
   socket.on('disconnect', function(){
@@ -23,7 +29,11 @@ io.on('connection', function(socket){
 
 const tick = () => {
   try {
-    io.emit('tick');
+    for(var key in connectedClients) {
+      connectedClients[key].money++;
+    }
+    console.log(connectedClients);
+    io.emit('tick', { clients : connectedClients });
   }
   catch {
     log("Unable to tick.");
@@ -32,7 +42,7 @@ const tick = () => {
 
 const userConnect = async (socket) => {
   try {
-    connectedClients[socket.id] = socket;
+    connectedClients[socket.id] = { id: socket.id, money: 0, colour: Math.floor(Math.random()*16777215).toString(16) };
     io.emit('user_connect', { id: socket.id, connected: clientsNum() });
     log("User Connected.", socket.id);
   }

@@ -57,7 +57,7 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
     float: left;
   }
   .grass {
-    background: #76a21e;
+    background-color: #76a21e;
     background-size: 50px 50px;
     /*-ms-transform: rotate(210deg) skew(-30deg) translate(-200px, -60px) scaleY(0.864);
     -webkit-transform: rotate(210deg) skew(-30deg) translate(-200px, -60px) scaleY(0.864);

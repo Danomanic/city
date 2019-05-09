@@ -17,13 +17,23 @@ $(function () {
   });
 
   socket.on('tick', function(msg) {
-    money++;
-    $('#money').text(money.toFixed(2));
+    var clients = msg.clients;
+    money = clients[socket.id].money;
+    $('#money').text(money);
   });
 
-  socket.on('user_click', function(msg) {
-    console.log(msg.tile);
-    $("#" + msg.tile).addClass("clicked");
+  socket.on('user_money', function(data) {
+    money = data;
+    $('#money').text(money);
+  });
+
+  socket.on('user_click', function(data) {
+    console.log(data);
+    if(data.status == 1) {
+      $("#" + data.tile).css("background-color", "#" + data.colour);
+    } else {
+      notyf.error("Unable to purchase area.");
+    }
   });
 
   socket.on('connect', function () {
@@ -42,8 +52,11 @@ $(function () {
   loadTiles();
 
   $( ".tile" ).click(function() {
-    var pos = $(this).position();
-    socket.emit('user_click', { id: socket.id, tile: $(this).attr('id') });
+    if(money >= 10) {
+      socket.emit('user_click', { tile: $(this).attr('id') });
+    } else {
+      notyf.error("Not enough money!");
+    }
   });
 
 });
