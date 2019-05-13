@@ -26,6 +26,7 @@ function click(socket, data) {
   if(users[socket.id].money >= 10) {
     users[socket.id].money = users[socket.id].money - 10;
     tile.obtain(data.tile, users[socket.id]);
+    io.emit('tile', {id: data.tile, user: users[socket.id]});
   }
 }
 

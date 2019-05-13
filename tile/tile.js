@@ -1,5 +1,5 @@
 function obtain(tile, user) {
-  tiles[tile].user = user.id;
+  tiles[tile].user = user;
   log.info(tiles);
 }
 

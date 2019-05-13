@@ -60,7 +60,7 @@ for (var x = 1; x < 21; x++) {
   for (var y = 1; y < 21; y++) {
     var tile;
     var id = "tile_"+x+"_"+y;
-    tile = { id: id, user: null }
+    tile = { id: id, user: { id: null, colour: "76a21e"} }
     tiles[id] = tile;
   }
 }
