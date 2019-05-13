@@ -4,6 +4,7 @@ function connect(socket) {
   try {
     users[socket.id] = { id: socket.id, money: 1000, colour: Math.floor(Math.random()*16777215).toString(16) };
     io.emit('user_connect', { id: socket.id, connected: Object.keys(users).length });
+    socket.emit('tiles', tiles);
     log.info("User Connected.", socket.id);
   }
   catch(e) {
@@ -24,9 +25,15 @@ function disconnect(socket) {
 
 function click(socket, data) {
   if(users[socket.id].money >= 10) {
-    users[socket.id].money = users[socket.id].money - 10;
-    tile.obtain(data.tile, users[socket.id]);
-    io.emit('tile', {id: data.tile, user: users[socket.id]});
+    if(tiles[data.tile].user.id != users[socket.id].id) {
+      users[socket.id].money = users[socket.id].money - 10;
+      tile.obtain(data.tile, users[socket.id]);
+      io.emit('tile', {id: data.tile, user: users[socket.id]});
+    } else {
+      socket.emit('user_error', { message: 'Tile already taken.' });
+    }
+  } else {
+    socket.emit('user_error', { message: 'Not enough money!' });
   }
 }
 

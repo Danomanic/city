@@ -34,8 +34,7 @@ const tick = () => {
     for(var key in users) {
       users[key].money++;
     }
-    io.emit('tick', { clients : users });
-    io.emit('tiles', tiles);
+    io.emit('tick', { users : users });
   }
   catch {
     log.info("Unable to tick.");
@@ -60,7 +59,7 @@ for (var x = 1; x < 21; x++) {
   for (var y = 1; y < 21; y++) {
     var tile;
     var id = "tile_"+x+"_"+y;
-    tile = { id: id, user: { id: null, colour: "76a21e"} }
+    tile = { id: id, user: { id: "", colour: "76a21e"} }
     tiles[id] = tile;
   }
 }

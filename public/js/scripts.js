@@ -17,10 +17,14 @@ $(function () {
     $("#"+msg.id).remove();
   });
 
-  socket.on('tick', function(msg) {
-    var clients = msg.clients;
+  socket.on('tick', function(data) {
+    var clients = data.users;
     user_money = clients[socket.id].money;
     $('#money').text(user_money);
+  });
+
+  socket.on('user_error', function(data) {
+    notyf.error(data.message);
   });
 
   socket.on('tiles', function(tiles) {
