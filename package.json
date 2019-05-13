@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "forever index.js"
+    "start": "node index.js"
   },
   "author": "Daniel J. Pomfret",
   "license": "ISC",
