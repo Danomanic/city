@@ -41,7 +41,7 @@ const tick = () => {
 }
 
 
-http.listen(8080, function(){
+http.listen(80, function(){
   log.info('Listening on *:8080');
 });
 
