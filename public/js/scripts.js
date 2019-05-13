@@ -3,7 +3,6 @@ $(function () {
   var notyf = new Notyf();
 
   var previous_connection = false;
-  var tiles_loaded = false;
   var user_money = 0;
 
   socket.on('user_connect', function(msg) {
@@ -18,8 +17,7 @@ $(function () {
   });
 
   socket.on('tick', function(data) {
-    var clients = data.users;
-    user_money = clients[socket.id].money;
+    user_money = data.users[socket.id].money;
     $('#money').text(user_money);
   });
 
@@ -28,30 +26,27 @@ $(function () {
   });
 
   socket.on('tiles', function(tiles) {
-    if(tiles_loaded) {
-    } else {
-      console.log(tiles);
       for(var key in tiles) {
         var tile = $('<div id="'+tiles[key].id+'" class="tile grass"></div>');
         tile.css("background-color", "#" + tiles[key].user.colour);
         $("#area").append(tile);
       }
-      tiles_loaded = true;
+      
       $( ".tile" ).click(function() {
         if(user_money >= 10) {
           socket.emit('user_click', { tile: $(this).attr('id') });
-          user_money = user_money - 10;
-          moneyUpdate();
         } else {
           notyf.error("Not enough money!");
         }
       });
-    }
   });
 
   socket.on('tile', function(tile) {
-    console.log(tile);
-      $("#" + tile.id).css("background-color", "#" + tile.user.colour);
+    $("#" + tile.id).css("background-color", "#" + tile.user.colour);
+    if(tile.user.id == socket.id) {
+      user_money = tile.user.money;
+      moneyUpdate();
+    }
   });
 
   socket.on('connect', function () {
