@@ -3,6 +3,7 @@ $(function () {
   var notyf = new Notyf();
 
   var previous_connection = false;
+  var tiles_loaded = false;
   var money = 0;
 
   socket.on('user_connect', function(msg) {
@@ -22,17 +23,23 @@ $(function () {
     $('#money').text(money);
   });
 
-  socket.on('user_money', function(data) {
-    money = data;
-    $('#money').text(money);
-  });
-
   socket.on('user_click', function(data) {
     console.log(data);
     if(data.status == 1) {
       $("#" + data.tile).css("background-color", "#" + data.colour);
     } else {
       notyf.error("Unable to purchase area.");
+    }
+  });
+
+  socket.on('tiles', function(tiles) {
+    if(tiles_loaded) {
+    } else {
+      for(var key in tiles) {
+        var tile = $('<div id="'+tiles[key].id+'" class="tile grass"></div>');
+        $("#area").append(tile);
+      }
+      tiles_loaded = true;
     }
   });
 
@@ -49,11 +56,10 @@ $(function () {
     notyf.error("Server disconnected.");
   });
 
-  loadTiles();
-
   $( ".tile" ).click(function() {
     if(money >= 10) {
       socket.emit('user_click', { tile: $(this).attr('id') });
+      updateMoney(-10);
     } else {
       notyf.error("Not enough money!");
     }
@@ -61,14 +67,7 @@ $(function () {
 
 });
 
-function loadTiles() {
-  console.log("Loading tiles...");
-
-  for (var x = 1; x < 21; x++) {
-    for (var y = 1; y < 21; y++) {
-      var tile = $('<div id="tile_'+x+'_'+y+'" class="tile grass"></div>');
-      $("#area").append(tile);
-    }
-  }
-
+function moneyUpdate(amount) {
+  money = money + amount;
+  $('#money').text(money);
 }

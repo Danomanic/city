@@ -2,101 +2,63 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+global.io = io;
 
-var connectedClients = {};
+var user = require('./user');
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/public/index.html');
-});
+var log = require('./utils/log.js');
+global.log = log;
+
+var users = {};
+global.users = users;
+
+var tiles = {};
+global.tiles = tiles;
 
 io.on('connection', function(socket){
-  userConnect(socket);
+  user.connect(socket);
 
   socket.on('user_click', function(data){
-    if(connectedClients[socket.id].money >= 10) {
-      connectedClients[socket.id].money = connectedClients[socket.id].money - 10;
-      socket.emit('user_money', connectedClients[socket.id].money);
-      io.emit('user_click', {id: socket.id, tile: data.tile, status: 1, colour: connectedClients[socket.id].colour });
-    } else {
-      io.emit('user_click', {id: socket.id, tile: data.tile, status: 0 });
-    }
+    user.click(socket, data);
   });
 
   socket.on('disconnect', function(){
-    userDisconnect(socket);
+    user.disconnect(socket);
   });
 });
 
 const tick = () => {
   try {
-    for(var key in connectedClients) {
-      connectedClients[key].money++;
+    for(var key in users) {
+      users[key].money++;
     }
-    console.log(connectedClients);
-    io.emit('tick', { clients : connectedClients });
+    io.emit('tick', { clients : users });
+    io.emit('tiles', tiles);
   }
   catch {
-    log("Unable to tick.");
+    log.info("Unable to tick.");
   }
-}
-
-const userConnect = async (socket) => {
-  try {
-    connectedClients[socket.id] = { id: socket.id, money: 100, colour: Math.floor(Math.random()*16777215).toString(16) };
-    io.emit('user_connect', { id: socket.id, connected: clientsNum() });
-    log("User Connected.", socket.id);
-  }
-  catch {
-    log("Unable to broadcast user_connect.", socket.id);
-  }
-}
-
-const userDisconnect = async (socket) => {
-  try {
-    delete connectedClients[socket.id];
-    io.emit('user_disconnect', { id: socket.id, connected: clientsNum() });
-    log("User Disconnected", socket.id);
-  }
-  catch {
-    log("Unable to broadcast user_disconnect.", socket.id);
-  }
-}
-
-const log = async (message, id = null) => {
-  var date = new Date();
-  console.log(formatDate(date) + " | " + (id ? id : "Server").padEnd(20) + " | " + message);
-}
-
-const formatDate = (date) => {
-  var hour = date.getHours();
-  hour = (hour < 10 ? "0" : "") + hour;
-
-  var min  = date.getMinutes();
-  min = (min < 10 ? "0" : "") + min;
-
-  var sec  = date.getSeconds();
-  sec = (sec < 10 ? "0" : "") + sec;
-
-  var year = date.getFullYear();
-
-  var month = date.getMonth() + 1;
-  month = (month < 10 ? "0" : "") + month;
-
-  var day  = date.getDate();
-  day = (day < 10 ? "0" : "") + day;
-
-  return [year, month, day].join('-') + " " + [hour, min, sec].join(':');
-}
-
-const clientsNum = () => {
-  return Object.keys(connectedClients).length;
 }
 
 
 http.listen(8080, function(){
-  log('Listening on *:8080');
+  log.info('Listening on *:8080');
 });
 
 app.use(express.static('public'));
 
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/public/index.html');
+});
+
+
 var intervalID = setInterval(tick, 1000);
+
+for (var x = 1; x < 21; x++) {
+  for (var y = 1; y < 21; y++) {
+    var tile;
+    var id = "tile_"+x+"_"+y;
+    tile = { id: id, user: null }
+    tiles[id] = tile;
+  }
+}
