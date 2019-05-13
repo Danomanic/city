@@ -15,6 +15,8 @@ global.users = users;
 var tiles = {};
 global.tiles = tiles;
 
+var port = process.env.PORT || 5000
+
 io.on('connection', function(socket){
   user.connect(socket);
 
@@ -41,8 +43,8 @@ const tick = () => {
 }
 
 
-http.listen(80, function(){
-  log.info('Listening on *:8080');
+http.listen(port, function(){
+  log.info('Listening on *:'+port);
 });
 
 app.use(express.static('public'));
