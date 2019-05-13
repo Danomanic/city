@@ -2,7 +2,7 @@ var tile = require('../tile');
 
 function connect(socket) {
   try {
-    users[socket.id] = { id: socket.id, money: 100, colour: Math.floor(Math.random()*16777215).toString(16) };
+    users[socket.id] = { id: socket.id, money: 1000, colour: Math.floor(Math.random()*16777215).toString(16) };
     io.emit('user_connect', { id: socket.id, connected: Object.keys(users).length });
     log.info("User Connected.", socket.id);
   }
