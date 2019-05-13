@@ -24,15 +24,8 @@ describe('user.connect()', function () {
 
 describe('user.disconnect()', function () {
   it('should remove socket from users array', function () {
-
-    // 1. ARRANGE
     var socket = { id: "test" };
-
-    // 2. ACT
     user.disconnect(socket);
-
-    // 3. ASSERT
     expect(users).to.not.have.keys([socket.id]);
-
   });
 });
