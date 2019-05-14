@@ -25,10 +25,10 @@ $(function () {
     notyf.error(data.message);
   });
 
-  socket.on('tiles', function(tiles) {
-      for(var key in tiles) {
-        var tile = $('<div id="'+tiles[key].id+'" class="tile grass"></div>');
-        tile.css("background-color", "#" + tiles[key].user.colour);
+  socket.on('welcome', function(data) {
+      for(var key in data.tiles) {
+        var tile = $('<div id="'+data.tiles[key].id+'" class="tile grass"></div>');
+        tile.css("background-color", "#" + data.tiles[key].user.colour);
         $("#area").append(tile);
       }
       
@@ -39,6 +39,8 @@ $(function () {
           notyf.error("Not enough money!");
         }
       });
+
+      $("#version").text(data.version);
   });
 
   socket.on('tile', function(tile) {

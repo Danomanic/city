@@ -4,8 +4,7 @@ function connect(socket) {
   try {
     users[socket.id] = { id: socket.id, money: 1000, colour: Math.floor(Math.random()*16777215).toString(16) };
     io.emit('user_connect', { id: socket.id, connected: Object.keys(users).length });
-    socket.emit('tiles', tiles);
-    log.info("User Connected.", socket.id);
+    socket.emit('welcome', { tiles : tiles, version: pjson.version });
   }
   catch(e) {
     log.error(e, socket.id);
