@@ -19,6 +19,12 @@ $(function () {
   socket.on('tick', function(data) {
     user_money = data.users[socket.id].money;
     $('#money').text(user_money);
+    $('#users').html("");
+    for(var key in data.users) {
+      var user = $('<li>'+data.users[key].id+' ($'+data.users[key].money+')</li>');
+        user.css("color", "#" + data.users[key].colour);
+        $("#users").append(user);
+    }
   });
 
   socket.on('user_error', function(data) {
