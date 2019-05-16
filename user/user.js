@@ -2,9 +2,12 @@ var tile = require('../tile');
 
 function connect(socket) {
   try {
-    users[socket.id] = { id: socket.id, money: 1000, colour: Math.floor(Math.random()*16777215).toString(16) };
-    io.emit('user_connect', { id: socket.id, connected: Object.keys(users).length });
-    socket.emit('welcome', { tiles : tiles, version: pjson.version });
+    DB.db.collection('users').insertOne({ id: socket.id }, () => {
+      users[socket.id] = { id: socket.id, money: 1000, colour: Math.floor(Math.random()*16777215).toString(16) };
+      io.emit('user_connect', { id: socket.id, connected: Object.keys(users).length });
+      socket.emit('welcome', { tiles : tiles, version: pjson.version });
+      log.info("User Connected", socket.id);
+    });
   }
   catch(e) {
     log.error(e, socket.id);
@@ -13,9 +16,11 @@ function connect(socket) {
 
 function disconnect(socket) {
   try {
-    delete users[socket.id];
-    io.emit('user_disconnect', { id: socket.id, connected: Object.keys(users).length });
-    log.info("User Disconnected", socket.id);
+    DB.db.collection('users').deleteOne({ id: socket.id }, () => {
+      delete users[socket.id];
+      io.emit('user_disconnect', { id: socket.id, connected: Object.keys(users).length });
+      log.info("User Disconnected", socket.id);
+    });
   }
   catch(e) {
     log.error(e, socket.id);

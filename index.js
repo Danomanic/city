@@ -1,16 +1,24 @@
-var pjson = require('./package.json');
+const pjson = require('./package.json');
 global.pjson = pjson;
 
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const cjson = require('./credentials.json');
+global.cjson = cjson;
+
+const { DB } = require('./lib/DB.js');
+global.DB = DB;
+
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 global.io = io;
 
-var user = require('./user');
+const user = require('./user');
 
-var log = require('./utils/log.js');
+const log = require('./utils/log.js');
 global.log = log;
+
+const port = process.env.PORT || 5000
 
 var users = {};
 global.users = users;
@@ -18,7 +26,7 @@ global.users = users;
 var tiles = {};
 global.tiles = tiles;
 
-var port = process.env.PORT || 5000
+DB.connectToMongo();
 
 io.on('connection', function(socket){
   user.connect(socket);
