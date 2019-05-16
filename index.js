@@ -3,6 +3,7 @@ global.pjson = pjson;
 
 const cjson = require('./credentials.json');
 global.cjson = cjson;
+global.cjson.mongo.url = process.env.MONGO_URL;
 
 const { DB } = require('./lib/DB.js');
 global.DB = DB;
