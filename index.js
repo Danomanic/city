@@ -1,6 +1,8 @@
 const pjson = require('./package.json');
 global.pjson = pjson;
 
+const env = require('dotenv').config();
+
 const cjson = require('./credentials.json');
 global.cjson = cjson;
 global.cjson.mongo.url = process.env.MONGO_URL;

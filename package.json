@@ -16,6 +16,7 @@
   "author": "Daniel J. Pomfret",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.0.0",
     "express": "^4.15.2",
     "forever": "^1.0.0",
     "mongodb": "^3.2.4",
