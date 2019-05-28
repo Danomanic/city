@@ -25,7 +25,13 @@ global.users = users;
 const tiles = {};
 global.tiles = tiles;
 
-DB.connectToMongo();
+DB.connectToMongo((response) => {
+  DB.db.collection('tiles').find().sort({ id: 1 }).toArray((err, result) => {
+    for (let x = 0; x < result.length; x += 1) {
+      tiles[result[x].id] = result[x];
+    }
+  });
+});
 
 io.on('connection', (socket) => {
   user.connect(socket);
@@ -61,13 +67,4 @@ app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/public/index.html`);
 });
 
-
 setInterval(tick, 1000);
-
-for (let x = 1; x < 21; x += 1) {
-  for (let y = 1; y < 21; y += 1) {
-    const id = `tile_${x}_${y}`;
-    const tile = { id, user: { id: '', colour: '76a21e' } };
-    tiles[id] = tile;
-  }
-}

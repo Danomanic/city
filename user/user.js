@@ -5,7 +5,10 @@ function connect(socket) {
     DB.db.collection('users').insertOne({ id: socket.id }, () => {
       users[socket.id] = { id: socket.id, money: 1000, colour: Math.floor(Math.random() * 16777215).toString(16) };
       io.emit('user_connect', { id: socket.id, connected: Object.keys(users).length });
-      socket.emit('welcome', { tiles, version: pjson.version });
+
+      DB.db.collection('tiles').find().sort({ id: 1 }).toArray((err, result) => {
+        socket.emit('welcome', { tiles: result, version: pjson.version });
+      });
       log.info('User Connected', socket.id);
     });
   } catch (e) {
