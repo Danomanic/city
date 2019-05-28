@@ -1,6 +1,6 @@
 {
   "name": "city",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "",
   "engines": {
     "node": "11.7.0"
