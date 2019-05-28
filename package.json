@@ -11,7 +11,9 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node index.js"
+    "start": "node index.js",
+    "lighthouse": "lighthouse http://localhost:5000",
+    "lint": "eslint"
   },
   "author": "Daniel J. Pomfret",
   "license": "ISC",
@@ -19,12 +21,17 @@
     "dotenv": "^8.0.0",
     "express": "^4.15.2",
     "forever": "^1.0.0",
+    "lighthouse": "^5.0.0",
     "mongodb": "^3.2.4",
     "notyf": "^3.0.4",
+    "phaser": "^3.17.0",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3",
     "mocha": "^6.1.4"
   }
 }

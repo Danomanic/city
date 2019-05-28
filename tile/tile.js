@@ -3,5 +3,5 @@ function obtain(tile, user) {
 }
 
 module.exports = {
-  obtain
-}
+  obtain,
+};

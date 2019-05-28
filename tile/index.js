@@ -1,5 +1,5 @@
-var tile = require('./tile');
+const tile = require('./tile');
 
 module.exports = {
-  obtain: tile.obtain
-}
+  obtain: tile.obtain,
+};

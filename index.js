@@ -1,79 +1,73 @@
-const pjson = require('./package.json');
-global.pjson = pjson;
-
 const env = require('dotenv').config();
-
-const cjson = require('./credentials.json');
-global.cjson = cjson;
-global.cjson.mongo.url = process.env.MONGO_URL;
-
-const { DB } = require('./lib/DB.js');
-global.DB = DB;
-
 const express = require('express');
+
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-global.io = io;
-
+const { DB } = require('./lib/DB.js');
+const cjson = require('./credentials.json');
+const pjson = require('./package.json');
 const user = require('./user');
-
 const log = require('./utils/log.js');
+
+global.pjson = pjson;
+global.io = io;
+global.cjson = cjson;
+global.cjson.mongo.url = process.env.MONGO_URL;
+global.DB = DB;
 global.log = log;
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5000;
 
-var users = {};
+const users = {};
 global.users = users;
 
-var tiles = {};
+const tiles = {};
 global.tiles = tiles;
 
 DB.connectToMongo();
 
-io.on('connection', function(socket){
+io.on('connection', (socket) => {
   user.connect(socket);
 
-  socket.on('user_click', function(data){
+  socket.on('user_click', (data) => {
     user.click(socket, data);
   });
 
-  socket.on('disconnect', function(){
+  socket.on('disconnect', () => {
     user.disconnect(socket);
   });
 });
 
 const tick = () => {
   try {
-    for(var key in users) {
-      users[key].money++;
-    }
-    io.emit('tick', { users : users });
+    Object.keys(users).forEach((key) => {
+      users[key].money += 1;
+    });
+    io.emit('tick', { users });
+  } catch (err) {
+    log.info('Unable to tick.');
   }
-  catch {
-    log.info("Unable to tick.");
-  }
-}
+};
 
 
-http.listen(port, function(){
-  log.info('Listening on *:'+port);
+http.listen(port, () => {
+  log.info(`Listening on *:${port}`);
 });
 
 app.use(express.static('public'));
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/public/index.html');
+app.get('/', (req, res) => {
+  res.sendFile(`${__dirname}/public/index.html`);
 });
 
 
-var intervalID = setInterval(tick, 1000);
+setInterval(tick, 1000);
 
-for (var x = 1; x < 21; x++) {
-  for (var y = 1; y < 21; y++) {
-    var tile;
-    var id = "tile_"+x+"_"+y;
-    tile = { id: id, user: { id: "", colour: "76a21e"} }
+for (let x = 1; x < 21; x += 1) {
+  for (let y = 1; y < 21; y += 1) {
+    const id = `tile_${x}_${y}`;
+    const tile = { id, user: { id: '', colour: '76a21e' } };
     tiles[id] = tile;
   }
 }
