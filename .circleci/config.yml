@@ -35,5 +35,4 @@ jobs:
 
       # run tests!
       - run: yarn test
-      - run: sudo apt-get install chromium; yarn lighthouse
       - run: yarn lint
