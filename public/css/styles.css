@@ -17,7 +17,7 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
     padding: 5px;
     width: 70%;
     height: 2em;
-    background: red;
+    background: blue;
 }
 
 .field {
