@@ -25,7 +25,7 @@
         }
       ],
       "command": [
-        "cd /usr/src/app/; /bin/node index.js"
+        "/bin/ls /usr/src/app/"
       ],
       "linuxParameters": null,
       "cpu": 256,
