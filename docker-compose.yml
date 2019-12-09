@@ -1,0 +1,11 @@
+version: '2.1'
+
+services:
+  city:
+    image: city
+    build: .
+    environment:
+      NODE_ENV: production
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+    ports:
+      - 5000:5000
