@@ -13,11 +13,17 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 }
 
 #top {
-    margin: auto;
-    padding: 5px;
-    width: 70%;
-    height: 2em;
-    background: blue;
+  margin: auto;
+  
+  background: rgba(38, 70, 83, 0.5);
+}
+
+.container {
+  margin: auto;
+  padding: 5px;
+  width: 70%;
+  height: 2em;
+  background: rgba(38, 70, 83, 1);
 }
 
 .field {

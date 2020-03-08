@@ -12,7 +12,6 @@
   "scripts": {
     "test": "mocha",
     "start": "node index.js",
-    "lighthouse": "lighthouse http://localhost:5000",
     "lint": "eslint"
   },
   "author": "Daniel J. Pomfret",
@@ -21,7 +20,6 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "forever": "^1.0.0",
-    "lighthouse": "^5.0.0",
     "mongodb": "^3.2.6",
     "notyf": "^3.0.4",
     "phaser": "^3.17.0",
