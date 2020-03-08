@@ -16,7 +16,7 @@ DB.connectToMongo((response) => {
   let tiles = [];
   for (x = 0; x < 20; x++) {
     for (y = 0; y < 20; y++) {
-      tiles.push({ id: `tile_${x}_${y}`, user: {} });
+      tiles.push({ id: `tile_${x}_${y}`, user: { id: 0, money: 0 } });
     }
   }
 

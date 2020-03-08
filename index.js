@@ -43,6 +43,17 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     user.disconnect(socket);
   });
+
+  socket.on('devtool_reset', () => {
+    DB.db.collection('tiles').deleteMany({});
+    let tiles = [];
+    for (x = 0; x < 20; x++) {
+      for (y = 0; y < 20; y++) {
+        tiles.push({ id: `tile_${x}_${y}`, user: { id: 0, money: 0 } });
+      }
+    }
+    DB.db.collection('tiles').insertMany(tiles);
+  });
 });
 
 const tick = () => {

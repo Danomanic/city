@@ -14,16 +14,20 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 
 #top {
   margin: auto;
-  
-  background: rgba(38, 70, 83, 0.5);
 }
 
 .container {
   margin: auto;
-  padding: 5px;
+  padding: 7px 10px;
   width: 70%;
   height: 2em;
-  background: rgba(38, 70, 83, 1);
+  background: rgba(38, 70, 83, 0.8);
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .field {
@@ -32,11 +36,13 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   background: #eeeeee;
   font-weight: bold;
   float: left;
-  border-left: 5px solid #393e46;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
 
 .money {
-  width: 200px;
+ 
 }
 
 .connected {
@@ -95,4 +101,22 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   padding: 10px;
   background-color: #eeeeee;
   list-style-type: none;
+}
+
+#menu {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 5px;
+  width: 70%;
+  height: 2em;
+  background: rgba(38, 70, 83, 0.8);
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
